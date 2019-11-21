@@ -1,0 +1,4 @@
+# Project exclude paths
+/xc-framework-model/target/
+/xc-service-api/target/
+/xc-service-manage-cms/target/
