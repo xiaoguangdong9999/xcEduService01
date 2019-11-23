@@ -34,8 +34,7 @@ public class RabbitmqConfig {
     //声明队列
     @Bean(QUEUE_CMS_POSTPAGE)
     public Queue QUEUE_CMS_POSTPAGE(){
-        Queue queue = new Queue(queue_cms_postpage_name);
-        return queue;
+        return new Queue(queue_cms_postpage_name);
     }
 
     /**
@@ -44,6 +43,7 @@ public class RabbitmqConfig {
      * @param exchange
      * @return
      */
+    @Bean
     public Binding BINDING_QUEUE_INFORM_SMS(@Qualifier(QUEUE_CMS_POSTPAGE) Queue queue,@Qualifier(EX_ROUTING_CMS_POSTPAGE) Exchange exchange){
         return BindingBuilder.bind(queue).to(exchange).with(routingkey).noargs();
     }

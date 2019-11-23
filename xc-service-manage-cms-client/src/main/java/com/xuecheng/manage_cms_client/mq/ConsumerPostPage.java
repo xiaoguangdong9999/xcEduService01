@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Map;
 import java.util.Optional;
@@ -17,6 +18,7 @@ import java.util.Optional;
  * @date 2019/11/23
  * @description 收到消息后从服务器下载页面
  */
+@Component
 public class ConsumerPostPage {
 
     private static final Logger log = LoggerFactory.getLogger(ConsumerPostPage.class);

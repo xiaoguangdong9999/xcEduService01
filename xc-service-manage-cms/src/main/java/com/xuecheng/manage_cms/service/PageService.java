@@ -244,7 +244,7 @@ public class PageService {
         //获取站点ID作为routingkey
         String siteId = cmsPage.getSiteId();
         //发布消息
-        rabbitTemplate.convertAndSend(RabbitmqConfig.EX_ROUTING_CMS_POSTPAGE,siteId,pageId);
+        rabbitTemplate.convertAndSend(RabbitmqConfig.EX_ROUTING_CMS_POSTPAGE,siteId,msg);
 
     }
 
