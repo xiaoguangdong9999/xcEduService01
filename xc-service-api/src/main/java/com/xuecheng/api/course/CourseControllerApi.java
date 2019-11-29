@@ -17,7 +17,7 @@ import io.swagger.annotations.ApiOperation;
  * Created by Administrator.
  */
 
-@Api(value="课程管理接口",description = "课程管理接口，提供课程的增、删、改、查")
+@Api(value="课程管理接口",tags = "课程管理接口，提供课程的增、删、改、查")
 public interface CourseControllerApi {
     @ApiOperation("课程计划查询")
     public TeachplanNode findTeachplanList(String courseId);

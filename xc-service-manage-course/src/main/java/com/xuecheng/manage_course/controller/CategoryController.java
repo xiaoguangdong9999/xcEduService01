@@ -26,9 +26,6 @@ public class CategoryController implements CategoryControllerApi {
     @Override
     @GetMapping("/list")
     public QueryResponseResult<CategoryNode> findList() {
-        CmsPageResult sdsfsdf = cmaPageClient.findById("5a754adf6abb500ad05688d9");
-        System.out.println(sdsfsdf);
-
         return categoryService.findCategoryList();
     }
 }
