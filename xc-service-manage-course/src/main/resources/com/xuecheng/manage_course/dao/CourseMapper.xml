@@ -9,7 +9,7 @@
     <select id="findCourseListPage" resultType="com.xuecheng.framework.domain.course.ext.CourseInfo"
     parameterType="com.xuecheng.framework.domain.course.request.CourseListRequest">
         select
-        course_base.*,
+        course_base.*,course_base.company_id as companyId,course_base.user_id as userId,
         (select pic from course_pic where courseid = course_base.id) pic
         from
         course_base

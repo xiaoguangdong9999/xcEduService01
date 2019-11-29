@@ -31,7 +31,9 @@ public class CourseBase implements Serializable {
     private String teachmode;
     private String description;
     private String status;
-    private String company_id;
-    private String user_id;
+    @Column(name="company_id")
+    private String companyId;
+    @Column(name="user_id")
+    private String userId;
 
 }

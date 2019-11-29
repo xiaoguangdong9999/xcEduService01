@@ -128,8 +128,7 @@ public class PageService {
         }
         cmsPage.setPageId(null);
         cmsPageRepository.save(cmsPage);
-        CmsPageResult cmsPageResult = new CmsPageResult(CommonCode.SUCCESS, cmsPage);
-        return cmsPageResult;
+        return new CmsPageResult(CommonCode.SUCCESS, cmsPage);
     }
 
     /**

@@ -1,17 +1,12 @@
 package com.xuecheng.manage_course.controller;
 
 import com.xuecheng.api.course.CategoryControllerApi;
-import com.xuecheng.api.course.CourseControllerApi;
-import com.xuecheng.framework.domain.course.Category;
-import com.xuecheng.framework.domain.course.Teachplan;
+import com.xuecheng.framework.domain.cms.CmsPage;
+import com.xuecheng.framework.domain.cms.response.CmsPageResult;
 import com.xuecheng.framework.domain.course.ext.CategoryNode;
-import com.xuecheng.framework.domain.course.ext.CourseInfo;
-import com.xuecheng.framework.domain.course.ext.TeachplanNode;
-import com.xuecheng.framework.domain.course.request.CourseListRequest;
 import com.xuecheng.framework.model.response.QueryResponseResult;
-import com.xuecheng.framework.model.response.ResponseResult;
+import com.xuecheng.manage_course.client.CmsPageClient;
 import com.xuecheng.manage_course.service.CategoryService;
-import com.xuecheng.manage_course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,9 +21,14 @@ public class CategoryController implements CategoryControllerApi {
     @Autowired
     CategoryService categoryService;
 
+    @Autowired
+    CmsPageClient cmaPageClient;
     @Override
-    @GetMapping("/list/{parentid}")
-    public QueryResponseResult<Category> findList(@PathVariable("parentid") String parentid) {
-        return categoryService.findCategoryList(parentid);
+    @GetMapping("/list")
+    public QueryResponseResult<CategoryNode> findList() {
+        CmsPageResult sdsfsdf = cmaPageClient.findById("5a754adf6abb500ad05688d9");
+        System.out.println(sdsfsdf);
+
+        return categoryService.findCategoryList();
     }
 }

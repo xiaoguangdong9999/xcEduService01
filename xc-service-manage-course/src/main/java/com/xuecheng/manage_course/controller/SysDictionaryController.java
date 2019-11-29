@@ -18,14 +18,14 @@ import org.springframework.web.bind.annotation.RestController;
  * @version 1.0
  **/
 @RestController
-@RequestMapping("/sysdictionary")
+@RequestMapping("/sys/dictionary")
 public class SysDictionaryController implements SysDicthinaryControllerApi {
 
     @Autowired
     SysDictionaryService sysDictionaryService;
 
     @Override
-    @GetMapping("/{type}")
+    @GetMapping("/get/{type}")
     public SysDictionary getByType(@PathVariable("type") String type) {
         System.out.println(type);
         return sysDictionaryService.findByType(type);

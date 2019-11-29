@@ -19,5 +19,5 @@ import io.swagger.annotations.ApiOperation;
 public interface CategoryControllerApi {
 
     @ApiOperation("查询分类")
-    public QueryResponseResult<Category> findList(String parentid);
+    public QueryResponseResult<CategoryNode> findList();
 }

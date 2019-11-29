@@ -26,7 +26,7 @@ import java.util.Scanner;
  **/
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class CmsPageRepositoryTest {
+public class ManageCmsApplicationTest {
 
     @Autowired
     CmsPageRepository cmsPageRepository;
