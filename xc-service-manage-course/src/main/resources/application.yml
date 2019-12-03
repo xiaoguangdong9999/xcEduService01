@@ -43,7 +43,7 @@ eureka:
 
 course-publish:
   siteId: 5b30cba5f58b4411fc6cb1e5
-  templateId: 5b345a6b94db44269cb2bfec
+  templateId: 5de5dcc39b8ebb432cede9c4
   previewUrl: http://www.xuecheng.com/cms/preview/
   pageWebPath: /course/detail/
   pagePhysicalPath: /course/detail/

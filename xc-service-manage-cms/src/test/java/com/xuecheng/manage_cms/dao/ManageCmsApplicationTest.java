@@ -53,9 +53,9 @@ public class ManageCmsApplicationTest {
 
     @Test
     public void fsTest () throws Exception{
-        File file = new File("C:/Users/User/Desktop/index_banner.ftl");
+        File file = new File("C:/Users/User/Desktop/course.ftl");
         FileInputStream fileInputStream = new FileInputStream(file);
-        ObjectId store = fsTemplate.store(fileInputStream, "index_banner.ftl");
+        ObjectId store = fsTemplate.store(fileInputStream, "测试文件课程详情","");
         System.out.println(store);
         Scanner scanner = new Scanner(System.in);
         int a = scanner.nextInt();

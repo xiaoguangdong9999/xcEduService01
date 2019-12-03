@@ -19,12 +19,12 @@ public class ManageCourseApplicationTest {
 
     @Autowired
     CmsPageClient cmaPageClient;
-    @Test
+    /*@Test
     public  void testPage() {
        CmsPageResult cmsPageResult = cmaPageClient.findById("sfsdfsdfsdf");
         System.out.println(cmsPageResult.getCmsPage().toString());
     }
-
+*/
 
 
 }

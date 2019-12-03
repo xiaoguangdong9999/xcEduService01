@@ -234,12 +234,12 @@ public class MediaUploadService {
             FileInputStream inputStream = new FileInputStream(mergeFile);
             //得到文件的md5
             String md5Hex = DigestUtils.md5Hex(inputStream);
-
             //和传入的md5比较
             if(md5.equalsIgnoreCase(md5Hex)){
                 return true;
             }
         } catch (Exception e) {
+            System.out.println(e.getMessage()+"---------------------");
             e.printStackTrace();
             return false;
         }
