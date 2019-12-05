@@ -78,15 +78,15 @@ public class EsCourseService {
         }
         if(StringUtils.isNotEmpty(courseSearchParam.getMt())){
             //根据一级分类
-            boolQueryBuilder.filter(QueryBuilders.termQuery("mt",courseSearchParam.getMt()));
+            boolQueryBuilder.filter(QueryBuilders.matchPhraseQuery("mt",courseSearchParam.getMt()));
         }
         if(StringUtils.isNotEmpty(courseSearchParam.getSt())){
             //根据二级分类
-            boolQueryBuilder.filter(QueryBuilders.termQuery("st",courseSearchParam.getSt()));
+            boolQueryBuilder.filter(QueryBuilders.matchPhraseQuery("st",courseSearchParam.getSt()));
         }
         if(StringUtils.isNotEmpty(courseSearchParam.getGrade())){
             //根据难度等级
-            boolQueryBuilder.filter(QueryBuilders.termQuery("grade",courseSearchParam.getGrade()));
+            boolQueryBuilder.filter(QueryBuilders.matchPhraseQuery("grade",courseSearchParam.getGrade()));
         }
 
         //设置boolQueryBuilder到searchSourceBuilder

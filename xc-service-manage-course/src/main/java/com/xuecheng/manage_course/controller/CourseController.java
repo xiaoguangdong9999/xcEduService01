@@ -152,13 +152,12 @@ public class CourseController extends BaseController implements CourseController
     @PostMapping("/courseinfo/list/{page}/{size}")
     public QueryResponseResult<CourseInfo> findCourseList(@PathVariable("page") int page,
                                                           @PathVariable("size") int size,
-                                                          CourseListRequest courseListRequest) {
-        /*//获取当前用户信息
+                                                          @RequestBody  CourseListRequest courseListRequest) {
+        //获取当前用户信息
         XcOauth2Util xcOauth2Util = new XcOauth2Util();
-        XcOauth2Util.UserJwt userJwt = xcOauth2Util.getUserJwtFromHeader(request);*/
+        XcOauth2Util.UserJwt userJwt = xcOauth2Util.getUserJwtFromHeader(request);
         //当前用户所属单位的id
-        //String company_id = userJwt.getCompanyId();
-        String company_id = "1";
+        String company_id = userJwt.getCompanyId();
 
         return courseService.findCourseList(company_id,page,size,courseListRequest);
     }
