@@ -102,7 +102,6 @@ public class CmsPageController implements CmsPageControllerApi {
     @Override
     @PostMapping("/postPageQuick")
     public CmsPostPageResult postPageQuick(@RequestBody CmsPage cmsPage) {
-        //return pageService.postPageQuick(cmsPage);
-        return null;
+        return pageService.postPageQuick(cmsPage);
     }
 }

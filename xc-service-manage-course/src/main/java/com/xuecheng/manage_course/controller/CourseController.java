@@ -124,7 +124,7 @@ public class CourseController extends BaseController implements CourseController
     }
 
     @Override
-    @GetMapping("/courseview/{id}")
+    @GetMapping(value = "/courseview/{id}" , produces = { "application/json;charset=UTF-8" })
     public CourseView courseview(@PathVariable("id") String id) {
         return courseService.getCoruseView(id);
     }

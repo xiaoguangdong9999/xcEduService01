@@ -59,10 +59,10 @@ public class PageService {
         //得到站点的信息
         CmsSite cmsSite = this.findCmsSiteById(siteId);
         //得到站点的物理路径
-        String sitePhysicalPath = cmsSite.getSitePhysicalPath();
-        System.out.println("得到物理路径："+sitePhysicalPath);
+        String siteWebPath = cmsSite.getSiteWebPath();
+        System.out.println("得到物理路径："+siteWebPath);
         //得到页面的物理路径
-        String pagePath = cmsPage.getPagePhysicalPath() + cmsPage.getPageName();
+        String pagePath = siteWebPath+ cmsPage.getPagePhysicalPath() + cmsPage.getPageName();
         //将html文件保存到服务器物理路径上
         FileOutputStream fileOutputStream = null;
         try {

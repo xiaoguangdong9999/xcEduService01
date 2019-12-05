@@ -57,7 +57,7 @@ public class LoginFilter extends ZuulFilter {
     //测试的需求：过虑所有请求，判断头部信息是否有Authorization，如果没有则拒绝访问，否则转发到微服务。
     @Override
     public Object run() throws ZuulException {
-        RequestContext requestContext = RequestContext.getCurrentContext();
+        /*RequestContext requestContext = RequestContext.getCurrentContext();
         //得到request
         HttpServletRequest request = requestContext.getRequest();
         //得到response
@@ -82,7 +82,7 @@ public class LoginFilter extends ZuulFilter {
             //拒绝访问
             access_denied();
             return null;
-        }
+        }*/
 
         return null;
     }
