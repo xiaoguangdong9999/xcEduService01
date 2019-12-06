@@ -1,6 +1,8 @@
 package com.xuecheng.manage_cms.dao;
 
 import com.xuecheng.framework.domain.cms.CmsPage;
+import com.xuecheng.manage_cms.service.PageService;
+import org.bson.types.ObjectId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +10,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.Scanner;
 
 /**
  * @author Administrator
@@ -20,10 +26,41 @@ import java.util.Optional;
  **/
 @SpringBootTest
 @RunWith(SpringRunner.class)
-public class CmsPageRepositoryTest {
+public class ManageCmsApplicationTest {
 
     @Autowired
     CmsPageRepository cmsPageRepository;
+
+    @Autowired
+    GridFsTemplate fsTemplate;
+
+    @Autowired
+    PageService pageService;
+
+    @Test
+    public  void testPage() {
+        try {
+            String pageHtml = pageService.getPageHtml("5a795ac7dd573c04508f3a56");
+            System.out.println(pageHtml);
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        System.out.println(a);
+    }
+
+    @Test
+    public void fsTest () throws Exception{
+        File file = new File("C:/Users/User/Desktop/course.ftl");
+        FileInputStream fileInputStream = new FileInputStream(file);
+        ObjectId store = fsTemplate.store(fileInputStream, "测试文件课程详情","");
+        System.out.println(store);
+        Scanner scanner = new Scanner(System.in);
+        int a = scanner.nextInt();
+        System.out.println(a);
+    }
 
     @Test
     public void testFindAll(){

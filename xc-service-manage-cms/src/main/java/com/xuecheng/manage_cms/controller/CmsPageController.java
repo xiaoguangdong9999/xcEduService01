@@ -1,14 +1,22 @@
 package com.xuecheng.manage_cms.controller;
 
 import com.xuecheng.api.cms.CmsPageControllerApi;
+import com.xuecheng.framework.domain.cms.CmsPage;
 import com.xuecheng.framework.domain.cms.request.QueryPageRequest;
+import com.xuecheng.framework.domain.cms.response.CmsPageResult;
+import com.xuecheng.framework.domain.cms.response.CmsPostPageResult;
+import com.xuecheng.framework.model.response.CommonCode;
 import com.xuecheng.framework.model.response.QueryResponseResult;
+import com.xuecheng.framework.model.response.ResponseResult;
 import com.xuecheng.manage_cms.service.PageService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Administrator
@@ -22,9 +30,14 @@ public class CmsPageController implements CmsPageControllerApi {
     @Autowired
     PageService pageService;
 
+
+    @Autowired
+    RestTemplate restTemplate;
+
+
     @Override
     @GetMapping("/list/{page}/{size}")
-    public QueryResponseResult findList(@PathVariable("page") int page, @PathVariable("size")int size, QueryPageRequest queryPageRequest) {
+    public QueryResponseResult findList(@PathVariable("page") int page, @PathVariable("size") int size, QueryPageRequest queryPageRequest) {
 
 /*        //暂时用静态数据
         //定义queryResult
@@ -39,6 +52,56 @@ public class CmsPageController implements CmsPageControllerApi {
         QueryResponseResult queryResponseResult = new QueryResponseResult(CommonCode.SUCCESS,queryResult);
         return queryResponseResult;*/
         //调用service
-        return pageService.findList(page,size,queryPageRequest);
+        return pageService.findList(page, size, queryPageRequest);
+    }
+
+    @Override
+    @PostMapping("/add")
+    public CmsPageResult add(@RequestBody CmsPage cmsPage) {
+        return pageService.add(cmsPage);
+    }
+
+    @Override
+    @GetMapping("/get/{id}")
+    public CmsPageResult findById(@PathVariable("id") String id) {
+
+        CmsPage cmsPage =  pageService.getById(id);
+        if (cmsPage !=null) {
+            return new CmsPageResult(CommonCode.SUCCESS,cmsPage);
+        }
+        return new CmsPageResult(CommonCode.FAIL,null);
+    }
+
+    @Override
+    @PutMapping("/edit/{id}")
+    public CmsPageResult edit(@PathVariable("id") String id, @RequestBody CmsPage cmsPage) {
+        return pageService.update(id, cmsPage);
+    }
+
+
+    @Override
+    @DeleteMapping("/delete/{id}")
+    public ResponseResult delete(@PathVariable("id") String id) {
+        return pageService.delete(id);
+    }
+
+    @Override
+    @PostMapping("/postPage/{pageId}")
+    public ResponseResult post(@PathVariable("pageId") String pageId) {
+
+        //return pageService.postPage(pageId);
+        return null;
+    }
+
+    @Override
+    @PostMapping("/save")
+    public CmsPageResult save(@RequestBody CmsPage cmsPage) {
+        return pageService.save(cmsPage);
+    }
+
+    @Override
+    @PostMapping("/postPageQuick")
+    public CmsPostPageResult postPageQuick(@RequestBody CmsPage cmsPage) {
+        return pageService.postPageQuick(cmsPage);
     }
 }
