@@ -53,4 +53,10 @@ public class EsCourseController implements SearchControllerApi {
         }
         return new TeachplanMediaPub();
     }
+
+    @Override
+    @GetMapping("/getbase/{ids}")
+    public Map<String, CoursePub> getBase(@PathVariable("ids") String[] ids) {
+        return esCourseService.getBase(ids);
+    }
 }
