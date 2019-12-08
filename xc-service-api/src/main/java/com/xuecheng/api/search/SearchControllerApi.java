@@ -23,6 +23,9 @@ public interface SearchControllerApi {
     @ApiOperation("根据课程id查询课程信息")
     public Map<String,CoursePub> getall(String id);
 
+    @ApiOperation("获取课程基本信息")
+    public Map<String, CoursePub> getBase(String[] ids);
+
     @ApiOperation("根据课程计划id查询课程媒资信息")
     public TeachplanMediaPub getmedia(String id);
 }

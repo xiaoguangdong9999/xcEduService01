@@ -16,6 +16,9 @@ import com.xuecheng.manage_course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Administrator
  * @version 1.0
@@ -32,17 +35,22 @@ public class CourseController extends BaseController implements CourseController
 
     /**
      * 添加课程
+     *
      * @param courseBase
      * @return
      */
     @Override
     @PostMapping("/coursebase/add")
     public ResponseResult addCourseBase(@RequestBody CourseBase courseBase) {
+        //String compaynId = getCompanyId();
+        //courseBase.setCompanyId(companyId);
+        courseBase.setCompanyId("1");
         return courseService.add(courseBase);
     }
 
     /**
      * 获取课程
+     *
      * @param courseId
      * @return
      */
@@ -54,6 +62,7 @@ public class CourseController extends BaseController implements CourseController
 
     /**
      * 编辑课程
+     *
      * @param courseId
      * @param courseBase
      * @return
@@ -61,11 +70,12 @@ public class CourseController extends BaseController implements CourseController
     @Override
     @PostMapping("/coursebase/update/{course_id}")
     public ResponseResult updateCourseBase(@PathVariable("course_id") String courseId, @RequestBody CourseBase courseBase) {
-        return courseService.updateCourse(courseId,courseBase);
+        return courseService.updateCourse(courseId, courseBase);
     }
 
     /**
      * 获取课程营销信息
+     *
      * @param courseMarketId
      * @return
      */
@@ -77,14 +87,15 @@ public class CourseController extends BaseController implements CourseController
 
     /**
      * 更新课程营销信息
+     *
      * @param courseMarketId
      * @param courseMarket
      * @return
      */
     @Override
     @PostMapping("/coursemarket/update/{coursemarket_id}")
-    public ResponseResult updateCourseMarket(@PathVariable("coursemarket_id") String courseMarketId, @RequestBody  CourseMarket courseMarket) {
-        return courseService.updateCourseMarket(courseMarketId,courseMarket);
+    public ResponseResult updateCourseMarket(@PathVariable("coursemarket_id") String courseMarketId, @RequestBody CourseMarket courseMarket) {
+        return courseService.updateCourseMarket(courseMarketId, courseMarket);
     }
 
     //当用户拥有course_teachplan_list权限时候方可访问此方法
@@ -98,15 +109,15 @@ public class CourseController extends BaseController implements CourseController
     //@PreAuthorize("hasAuthority('course_teachplan_add')")
     @Override
     @PostMapping("/teachplan/add")
-    public ResponseResult addTeachplan(@RequestBody  Teachplan teachplan) {
+    public ResponseResult addTeachplan(@RequestBody Teachplan teachplan) {
 
         return courseService.addTeachplan(teachplan);
     }
 
     @Override
     @PostMapping("/coursepic/add")
-    public ResponseResult addCoursePic(@RequestParam("courseId") String courseId, @RequestParam("pic")String pic) {
-        return courseService.addCoursePic(courseId,pic);
+    public ResponseResult addCoursePic(@RequestParam("courseId") String courseId, @RequestParam("pic") String pic) {
+        return courseService.addCoursePic(courseId, pic);
     }
 
     //当用户拥有course_pic_list权限时候方可访问此方法
@@ -124,7 +135,7 @@ public class CourseController extends BaseController implements CourseController
     }
 
     @Override
-    @GetMapping(value = "/courseview/{id}" , produces = { "application/json;charset=UTF-8" })
+    @GetMapping(value = "/courseview/{id}", produces = {"application/json;charset=UTF-8"})
     public CourseView courseview(@PathVariable("id") String id) {
         return courseService.getCoruseView(id);
     }
@@ -133,12 +144,11 @@ public class CourseController extends BaseController implements CourseController
     @PostMapping("/preview/{id}")
     public CoursePublishResult preview(@PathVariable("id") String id) {
         return courseService.preview(id);
-
     }
 
     @Override
     @PostMapping("/publish/{id}")
-    public CoursePublishResult publish(@PathVariable("id")String id) {
+    public CoursePublishResult publish(@PathVariable("id") String id) {
         return courseService.publish(id);
     }
 
@@ -149,17 +159,32 @@ public class CourseController extends BaseController implements CourseController
     }
 
     @Override
+    @GetMapping("/courseview/list/{ids}")
+    public Map<String,CourseBase> getCourseBaseList (@PathVariable("ids") String[] ids) {
+        Map<String,CourseBase> map = new HashMap<>();
+        for (String id :ids) {
+            CourseBase courseBaseById = courseService.findCourseBaseById(id);
+            map.put(id,courseBaseById);
+        }
+        return map;
+    }
+
+    @Override
     @PostMapping("/courseinfo/list/{page}/{size}")
     public QueryResponseResult<CourseInfo> findCourseList(@PathVariable("page") int page,
                                                           @PathVariable("size") int size,
-                                                          CourseListRequest courseListRequest) {
-        /*//获取当前用户信息
-        XcOauth2Util xcOauth2Util = new XcOauth2Util();
-        XcOauth2Util.UserJwt userJwt = xcOauth2Util.getUserJwtFromHeader(request);*/
-        //当前用户所属单位的id
-        //String company_id = userJwt.getCompanyId();
+                                                          @RequestBody CourseListRequest courseListRequest) {
+        //String compaynId = getCompanyId();
         String company_id = "1";
-
-        return courseService.findCourseList(company_id,page,size,courseListRequest);
+        return courseService.findCourseList(company_id, page, size, courseListRequest);
     }
+
+    private String getCompanyId() {
+        XcOauth2Util xcOauth2Util = new XcOauth2Util();
+        XcOauth2Util.UserJwt userJwt = xcOauth2Util.getUserJwtFromHeader(request);
+        //当前用户所属单位的id
+        return userJwt.getCompanyId();
+    }
+
+
 }

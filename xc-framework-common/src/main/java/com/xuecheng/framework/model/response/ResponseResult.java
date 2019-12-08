@@ -13,7 +13,7 @@ import lombok.ToString;
 @Data
 @ToString
 @NoArgsConstructor
-public class ResponseResult implements Response {
+public class ResponseResult<T> implements Response {
 
     //操作是否成功
     boolean success = SUCCESS;
@@ -24,10 +24,19 @@ public class ResponseResult implements Response {
     //提示信息
     String message;
 
+    T data;
+
     public ResponseResult(ResultCode resultCode){
         this.success = resultCode.success();
         this.code = resultCode.code();
         this.message = resultCode.message();
+    }
+
+    public ResponseResult(String message,T data){
+        this.data = data;
+        this.success = true;
+        this.code = 0;
+        this.message = "操作成功";
     }
 
     public static ResponseResult SUCCESS(){

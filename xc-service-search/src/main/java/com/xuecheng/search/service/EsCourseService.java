@@ -78,15 +78,15 @@ public class EsCourseService {
         }
         if(StringUtils.isNotEmpty(courseSearchParam.getMt())){
             //根据一级分类
-            boolQueryBuilder.filter(QueryBuilders.termQuery("mt",courseSearchParam.getMt()));
+            boolQueryBuilder.filter(QueryBuilders.matchPhraseQuery("mt",courseSearchParam.getMt()));
         }
         if(StringUtils.isNotEmpty(courseSearchParam.getSt())){
             //根据二级分类
-            boolQueryBuilder.filter(QueryBuilders.termQuery("st",courseSearchParam.getSt()));
+            boolQueryBuilder.filter(QueryBuilders.matchPhraseQuery("st",courseSearchParam.getSt()));
         }
         if(StringUtils.isNotEmpty(courseSearchParam.getGrade())){
             //根据难度等级
-            boolQueryBuilder.filter(QueryBuilders.termQuery("grade",courseSearchParam.getGrade()));
+            boolQueryBuilder.filter(QueryBuilders.matchPhraseQuery("grade",courseSearchParam.getGrade()));
         }
 
         //设置boolQueryBuilder到searchSourceBuilder
@@ -151,11 +151,14 @@ public class EsCourseService {
                 //图片
                 String pic = (String) sourceAsMap.get("pic");
                 coursePub.setPic(pic);
+                String charge = (String  ) sourceAsMap.get("charge");
+                coursePub.setCharge(charge);
                 //价格
                 Double price = null;
                 try {
                     if(sourceAsMap.get("price")!=null ){
                         price = (Double) sourceAsMap.get("price");
+                        price = (double)Math.round(price * 100) /100;
                     }
 
                 } catch (Exception e) {
@@ -167,6 +170,7 @@ public class EsCourseService {
                 try {
                     if(sourceAsMap.get("price_old")!=null ){
                         price_old = (Double) sourceAsMap.get("price_old");
+                        price_old = (double)Math.round(price_old * 100) /100;
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -233,6 +237,15 @@ public class EsCourseService {
         }
 
 
+        return map;
+    }
+
+    public Map<String,CoursePub> getBase (String[] ids) {
+        Map<String,CoursePub> map = new HashMap<>();
+        for (String id :ids) {
+            Map<String, CoursePub> getall = getall(id);
+            map.put(id,getall.get(id));
+        }
         return map;
     }
 

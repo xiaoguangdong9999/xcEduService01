@@ -59,7 +59,5 @@ public class UserService {
         //设置权限
         xcUserExt.setPermissions(xcMenus);
         return xcUserExt;
-
     }
-
 }
