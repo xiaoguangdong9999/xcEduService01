@@ -11,6 +11,8 @@ import com.xuecheng.framework.model.response.ResponseResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
+import java.util.Map;
+
 /**
  * Created by Administrator.
  */
@@ -43,6 +45,9 @@ public interface CourseControllerApi {
 
     @ApiOperation("课程视图查询")
     public CourseView courseview(String id);
+
+    @ApiOperation("获取多个课程信息")
+    public Map<String, CourseBase> getCourseBaseList (String[] ids);
 
     @ApiOperation("课程预览")
     public CoursePublishResult preview(String id);

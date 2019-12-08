@@ -16,6 +16,9 @@ import com.xuecheng.manage_course.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * @author Administrator
  * @version 1.0
@@ -156,6 +159,17 @@ public class CourseController extends BaseController implements CourseController
     }
 
     @Override
+    @GetMapping("/courseview/list/{ids}")
+    public Map<String,CourseBase> getCourseBaseList (@PathVariable("ids") String[] ids) {
+        Map<String,CourseBase> map = new HashMap<>();
+        for (String id :ids) {
+            CourseBase courseBaseById = courseService.findCourseBaseById(id);
+            map.put(id,courseBaseById);
+        }
+        return map;
+    }
+
+    @Override
     @PostMapping("/courseinfo/list/{page}/{size}")
     public QueryResponseResult<CourseInfo> findCourseList(@PathVariable("page") int page,
                                                           @PathVariable("size") int size,
@@ -171,4 +185,6 @@ public class CourseController extends BaseController implements CourseController
         //当前用户所属单位的id
         return userJwt.getCompanyId();
     }
+
+
 }

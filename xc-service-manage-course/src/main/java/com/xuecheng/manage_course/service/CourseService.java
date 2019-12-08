@@ -227,8 +227,7 @@ public class CourseService {
     public CourseBase findCourseBaseById(String courseId){
         Optional<CourseBase> baseOptional = courseBaseRepository.findById(courseId);
         if(baseOptional.isPresent()){
-            CourseBase courseBase = baseOptional.get();
-            return courseBase;
+            return baseOptional.get();
         }
         ExceptionCast.cast(CourseCode.COURSE_DENIED_DELETE);
         return null;
