@@ -6,6 +6,7 @@ import com.xuecheng.framework.domain.order.XcOrders;
 import com.xuecheng.framework.domain.order.XcOrdersDetail;
 import com.xuecheng.framework.domain.order.XcOrdersPay;
 import com.xuecheng.framework.model.response.*;
+import com.xuecheng.order.client.LearningCourseClient;
 import com.xuecheng.order.dao.XcOrderDetailRepository;
 import com.xuecheng.order.dao.XcOrderPayRepository;
 import com.xuecheng.order.dao.XcOrderRepository;
@@ -36,6 +37,9 @@ public class OrderService {
     @Autowired
     XcOrderPayRepository xcOrderPayRepository;
 
+    @Autowired
+    LearningCourseClient learningCourseClient;
+
     public ResponseResult saveOrder (XcOrders xcOrders) {
 
         XcOrders xcOrders1 = new XcOrders();
@@ -56,12 +60,12 @@ public class OrderService {
 
                 @Override
                 public String message() {
-                    return "您有为完成的订单，请完成后进行创建订单";
+                    return "您有未完成的订单，请完成后进行创建订单";
                 }
             });
         }
         xcOrderRepository.save(xcOrders);
-        return new ResponseResult(CommonCode.SUCCESS);
+        return new ResponseResult("操作成功",xcOrders);
     }
 
     public ResponseResult batchSaveXcOrderDetail (List<XcOrdersDetail> xcOrdersDetails) {
@@ -116,12 +120,21 @@ public class OrderService {
             xcOrders1.setStatus("401002");
             xcOrderRepository.save(xcOrders1);
         }
+        String courseId = "";
         if (one.isPresent()) {
             XcOrdersPay xcOrdersPay1 = one.get();
             xcOrdersPay1.setPayNumber(payNum);
             xcOrdersPay1.setStatus("402002");
+            courseId = xcOrdersPay1.getId();
             xcOrderPayRepository.save(xcOrdersPay1);
         }
-        return true;
+
+        //添加课程
+        if (!courseId.equals("")){
+            learningCourseClient.addopencourse(courseId);
+            return true;
+        }
+
+        return false;
     }
 }

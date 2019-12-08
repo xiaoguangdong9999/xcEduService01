@@ -1,9 +1,7 @@
 package com.xuecheng.order.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.github.pagehelper.Page;
 import com.xuecheng.api.order.XcOrderControllerApi;
-import com.xuecheng.framework.domain.course.CourseBase;
 import com.xuecheng.framework.domain.course.ext.CourseView;
 import com.xuecheng.framework.domain.order.XcOrders;
 import com.xuecheng.framework.domain.order.XcOrdersDetail;
@@ -16,7 +14,6 @@ import com.xuecheng.framework.web.BaseController;
 import com.xuecheng.order.client.CourseBaseClient;
 import com.xuecheng.order.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -55,7 +52,7 @@ public class OrderController extends BaseController implements XcOrderController
         xcOrders.setUserId(getUserId());
 
         CourseView courseview = courseBaseClient.courseview(createOrderRequest.getCourseId());
-        xcOrders.setInitialPrice(courseview.getCourseMarket().getPrice_old());
+        xcOrders.setInitialPrice(courseview.getCourseMarket().getPrice_old()==null?courseview.getCourseMarket().getPrice():courseview.getCourseMarket().getPrice_old());
         xcOrders.setPrice(courseview.getCourseMarket().getPrice());
         xcOrders.setStatus("401001");
 
@@ -64,14 +61,20 @@ public class OrderController extends BaseController implements XcOrderController
         xcOrdersDetail.setItemNum(1);
         xcOrdersDetail.setItemPrice(courseview.getCourseMarket().getPrice());
         xcOrdersDetail.setOrderNumber(xcOrders.getOrderNumber());
+        xcOrdersDetail.setStartTime(new Date());
+        xcOrdersDetail.setEndTime(new Date(System.currentTimeMillis()+10*60*1000));
+        xcOrdersDetail.setValid("204001");
         List<XcOrdersDetail> list = new ArrayList<>();
         list.add(xcOrdersDetail);
         String xcDetail = JSON.toJSONString(list);
         xcOrders.setDetails(xcDetail);
         ResponseResult responseResult = orderService.saveOrder(xcOrders);
+        if (!responseResult.isSuccess()){
+            return responseResult;
+        }
         ResponseResult responseResult1 = orderService.batchSaveXcOrderDetail(list);
-        if (responseResult.isSuccess() && responseResult1.isSuccess()) {
-            return new ResponseResult(CommonCode.SUCCESS);
+        if (responseResult1.isSuccess()) {
+            return responseResult;
         }
         return new ResponseResult(CommonCode.FAIL);
     }
