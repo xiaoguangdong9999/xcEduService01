@@ -25,6 +25,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Maven: com.xuecheng:xc-framework-model:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.xuecheng:xc-framework-utils:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.xuecheng:xc-framework-common:1.0-SNAPSHOT" level="project" />
+    <orderEntry type="library" name="Maven: com.xuecheng:xc-service-api:1.0-SNAPSHOT" level="project" />
     <orderEntry type="module" module-name="xc-framework-model" />
     <orderEntry type="module" module-name="xc-framework-utils" />
     <orderEntry type="library" name="Maven: javax.servlet:javax.servlet-api:3.1.0" level="project" />
